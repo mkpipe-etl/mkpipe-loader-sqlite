@@ -18,11 +18,7 @@ class SqliteLoader:
             self.settings = settings
         self.connection_params = config['connection_params']
 
-        self.db_path = os.path.abspath(
-            os.path.join(
-                self.settings.ROOT_DIR, 'artifacts', self.connection_params['db_path']
-            )
-        )
+        self.db_path = os.path.abspath(self.connection_params['db_path'])
 
         self.driver_name = 'sqlite'
         self.driver_jdbc = 'org.sqlite.JDBC'

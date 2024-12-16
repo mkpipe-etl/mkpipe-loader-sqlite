@@ -10,3 +10,11 @@ For more detailed documentation, please visit the [GitHub repository](https://gi
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
 
+## mkpipe_project.yaml Variables
+```yaml
+...
+  connections:
+    source:
+      db_path: '/full_path/sqlite_db.db'
+...
+```
