@@ -39,6 +39,26 @@ pipelines:
 
 ---
 
+## Write Strategy
+
+Control how data is written to SQLite:
+
+```yaml
+      - name: public.users
+        target_name: stg_users
+        write_strategy: upsert       # append | replace | upsert | merge
+        write_key: [id]              # required for upsert/merge
+```
+
+| Strategy | SQLite Behavior |
+|---|---|
+| `append` | Plain `INSERT` via JDBC (default for incremental) |
+| `replace` | Drop and recreate table, then insert (default for full) |
+| `upsert` | `INSERT ... ON CONFLICT (write_key) DO UPDATE` via temp table |
+| `merge` | Same as upsert for SQLite |
+
+---
+
 ## Write Throughput
 
 ```yaml
@@ -65,6 +85,8 @@ pipelines:
 | `replication_method` | `full` / `incremental` | `full` | Replication strategy |
 | `batchsize` | int | `10000` | Rows per JDBC batch insert |
 | `write_partitions` | int | — | Set to `1` to avoid SQLite lock contention |
+| `write_strategy` | string | — | `append`, `replace`, `upsert`, `merge` |
+| `write_key` | list | — | Key columns for upsert/merge (required) |
 | `dedup_columns` | list | — | Columns used for `mkpipe_id` hash deduplication |
 | `tags` | list | `[]` | Tags for selective pipeline execution |
 | `pass_on_error` | bool | `false` | Skip table on error instead of failing |

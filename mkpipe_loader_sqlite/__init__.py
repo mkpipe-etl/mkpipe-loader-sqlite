@@ -8,6 +8,7 @@ JAR_PACKAGES = ['org.xerial:sqlite-jdbc:3.47.1.0']
 class SqliteLoader(JdbcLoader, variant='sqlite'):
     driver_name = 'sqlite'
     driver_jdbc = 'org.sqlite.JDBC'
+    _dialect = 'sqlite'
 
     def build_jdbc_url(self):
         db_path = self.connection.extra.get('db_path', self.database or 'data.db')
